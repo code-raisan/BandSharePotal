@@ -1,14 +1,17 @@
 import Header from "@/components/Header";
 
-const Home = () =>{
+const Service = () =>{
   return (
     <>
       <Header/>
       <main className="mt-20 container mx-auto px-5">
-        <h1 className="text-2xl font-bold">Service</h1>
+        <h1 className="text-2xl font-bold">Services</h1>
+        <div>
+
+        </div>
       </main>
     </>
   );
 };
 
-export default Home;
+export default Service;

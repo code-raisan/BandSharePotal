@@ -1,21 +1,38 @@
-import nextSession from "next-session";
+import type { NextApiResponse } from "next";
+import { serialize } from "cookie";
+import jwt from "jsonwebtoken";
 
-export interface AppSession {
-  username?: string
-};
+const SECRET_KEY = "secret_key";
 
-type NextSessionInstance = ReturnType<typeof nextSession>;
-type GetSessionArgs = Parameters<NextSessionInstance>;
-type GetSessionReturn = Pick<Awaited<ReturnType<NextSessionInstance>>, "cookie" | "id">;
-
-export const getSession: (
-  ...args: GetSessionArgs
-) => Promise<GetSessionReturn & AppSession> = nextSession();
-
-export default nextSession({
-  name: "NEXT_SESSION",
-  cookie: {
-    httpOnly: true,
-    maxAge: 60*60*2
+export const verifyJWT = (req: any, key: string) =>{
+  if(!req.cookies.JWT) return false;
+  try{
+    const token: any = jwt.verify(req.cookies.JWT, SECRET_KEY);
+    if(Date.now() > token.exp * 1000) return false;
+    return true;
+  }catch(e){
+    return false;
   }
-});
+}
+
+export const rmJWT = (req: any, res: any) =>{
+  if(!req.cookies.JWT) return false;
+  try{
+    const token: any = jwt.verify(req.cookies.JWT, SECRET_KEY);
+    if(Date.now() > token.exp * 1000) return false;
+    res.setHeader("Set-Cookie", serialize("JWT", "", {
+      httpOnly: true,
+      maxAge: -1
+    }));
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+
+export const setJWT = (res: NextApiResponse, username: string) =>{
+  const token = jwt.sign({ uid: username, iss: "BandSharePotalAPP" }, SECRET_KEY, { expiresIn: "1h" });
+  res.setHeader("Set-Cookie", serialize("JWT", token, {
+    httpOnly: true
+  }));
+}
