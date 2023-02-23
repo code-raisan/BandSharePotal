@@ -1,0 +1,9 @@
+{
+	"recommendations": [
+		"editorconfig.editorconfig",
+		"dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-typescript-next",
+		"fastify.fastify-snippets",
+        "bradlc.vscode-tailwindcss"
+	]
+}

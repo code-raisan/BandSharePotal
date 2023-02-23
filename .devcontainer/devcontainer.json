@@ -1,0 +1,25 @@
+{
+    "name": "BandSharePotal DevContainer Env",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "dockerComposeFile": ["./docker-compose.yml"],
+    "features": {
+      "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    "postCreateCommand": "yarn install",
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "remote.SSH.lockfilesInTmp": true
+        },
+        "extensions": [
+          "dbaeumer.vscode-eslint",
+          "ms-vscode.vscode-typescript-next",
+          "ms-azuretools.vscode-docker",
+          "fastify.fastify-snippets",
+          "bradlc.vscode-tailwindcss",
+          "editorconfig.editorconfig"
+        ]
+      }
+    }
+  }
